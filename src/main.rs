@@ -80,7 +80,6 @@ fn main() {
     let yes_no = vec!["Yes", "No"];
     loop {
         let user_input = get_user_input(yes_no.clone());
-        println!("{}------------------",user_input);
         match user_input {
             "Yes" => play(&mut u_score, &mut c_score),
             _ => {
