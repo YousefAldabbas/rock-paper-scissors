@@ -1,4 +1,4 @@
-use dialoguer::{console::Term, theme::ColorfulTheme, Select};
+use dialoguer::{console::Term, theme::ColorfulTheme, Confirm, Select};
 use rand::Rng;
 
 #[derive(Debug)]
@@ -51,10 +51,11 @@ fn get_random_choice(choices: &Vec<Choice>) -> &Choice {
     &choices[rnum]
 }
 
-fn get_user_input(items: Vec<&str>) -> &str {
+fn get_user_input(items: Vec<&str>, prompt: String) -> &str {
     let selection: Option<usize> = Select::with_theme(&ColorfulTheme::default())
         .items(&items)
         .default(0)
+        .with_prompt(prompt)
         .interact_on_opt(&Term::stderr())
         .unwrap();
 
@@ -74,12 +75,12 @@ fn get_user_choice(user_input: &str) -> Choice {
     user_choice
 }
 fn main() {
-    println!("Do you want to play a game?");
+    let mut prompt = String::from("Do you want to play a game?");
     let mut u_score = 0;
     let mut c_score = 0;
     let yes_no = vec!["Yes", "No"];
+    let mut user_input = get_user_input(yes_no.clone(), prompt);
     loop {
-        let user_input = get_user_input(yes_no.clone());
         match user_input {
             "Yes" => play(&mut u_score, &mut c_score),
             _ => {
@@ -88,16 +89,16 @@ fn main() {
             }
         }
         println!("Your score : {}\ncomputer score : {}", u_score, c_score);
-        println!("Do you want to play again ?");
+        prompt = "Do you want to play again ?".to_string();
+        user_input = get_user_input(yes_no.clone(), prompt);
     }
 }
 
 fn play(u_score: &mut i32, c_score: &mut i32) {
-    println!("THE GAME JUST STARTED");
     let choices = vec![Choice::Rock, Choice::Scissor, Choice::Paper];
-    println!("Choose your weapon: [rock, paper, scissor]");
+    let prompt = String::from("Choose your weapon");
     let items = vec!["rock", "paper", "scissor"];
-    let user_choice = get_user_choice(get_user_input(items));
+    let user_choice = get_user_choice(get_user_input(items, prompt));
     let computer_choice = get_random_choice(&choices);
 
     print_in_square(format!(
