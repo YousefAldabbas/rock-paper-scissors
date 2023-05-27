@@ -11,7 +11,7 @@
 ## Set up instructions
 1. Clone the repo.
    ```sh
-   $ git clone https://github.com/yousefaldabbas/rock-paper-scissor.git
+   $ git clone https://github.com/YousefAldabbas/rock-paper-scissors.git
    $ cd rock-paper-scissor
    ```
 
